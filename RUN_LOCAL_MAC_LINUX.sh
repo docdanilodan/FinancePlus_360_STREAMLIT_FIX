@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+cd "$(dirname "$0")"
+python3 -m pip install --upgrade pip
+python3 -m pip install -r requirements.txt
+streamlit run FinancePlus_360.py
