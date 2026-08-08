@@ -717,8 +717,36 @@ def render_help() -> None:
         st.code("desktop/FinancePlus_360_DESKTOP_TKINTER.py", language="text")
 
 
+def require_access_password() -> bool:
+    """Gate the app behind a password when ACCESS_PASSWORD is set in st.secrets.
+
+    No-op (returns True immediately) when no secret is configured, so local
+    Windows/desktop use stays password-free while a public Streamlit Cloud
+    deployment can be locked down by setting ACCESS_PASSWORD in Settings > Secrets.
+    """
+    try:
+        expected = st.secrets.get("ACCESS_PASSWORD", "")
+    except Exception:
+        expected = ""
+    if not expected:
+        return True
+    if st.session_state.get("_access_ok"):
+        return True
+    st.title("🔒 FinancePlus 360 - Accesso protetto")
+    pwd = st.text_input("Password di accesso", type="password")
+    if st.button("Entra"):
+        if pwd == expected:
+            st.session_state["_access_ok"] = True
+            st.rerun()
+        else:
+            st.error("Password errata.")
+    return False
+
+
 def main() -> None:
     st.set_page_config(page_title=APP_NAME, page_icon="📩", layout="wide")
+    if not require_access_password():
+        return
     init_state()
     cfg: AppConfig = st.session_state.cfg
 
