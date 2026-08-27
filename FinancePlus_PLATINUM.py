@@ -17,10 +17,10 @@ from FinancePlus_360 import (
     render_download,
     render_save_load,
 )
-from platinum_clients import render_clients_section
+from platinum_clients_v2 import render_clients_section
 
 APP_NAME = "FinancePlus PLATINUM"
-APP_VERSION = "1.0-platinum"
+APP_VERSION = "1.1-platinum"
 
 
 def render_sidebar() -> None:
@@ -29,7 +29,7 @@ def render_sidebar() -> None:
         st.caption("Finance & Credit Intelligence Workspace")
         st.markdown("---")
         st.markdown("**Moduli attivi**")
-        st.markdown("- 👥 Clienti Airtable\n- 📩 Email & allegati\n- 🗂️ Dossier collegati\n- 📊 Analisi creditizie")
+        st.markdown("- 👥 Clienti Airtable\n- 📩 Email & allegati\n- 🗂️ Dossier collegati\n- 📊 Analisi creditizie\n- 📄 Riepilogo documenti PDF")
         st.markdown("---")
         st.caption(f"PLATINUM {APP_VERSION} · Core {LEGACY_APP_VERSION}")
 
@@ -38,14 +38,15 @@ def render_home() -> None:
     st.header("💎 FinancePlus PLATINUM")
     st.markdown(
         "Workspace unico per **clienti, pratiche, documenti, email e analisi creditizie**. "
-        "La nuova sezione Clienti legge direttamente il CRM Airtable e apre l'anagrafica completa dentro Streamlit."
+        "La sezione Clienti legge direttamente il CRM Airtable, apre l'anagrafica completa dentro Streamlit "
+        "e consente di visualizzare e scaricare il riepilogo PDF dei documenti collegati."
     )
     c1, c2, c3 = st.columns(3)
     c1.success("👥 **Clienti**\n\nRicerca live su Airtable")
     c2.info("📩 **Email**\n\nDownload e archiviazione allegati")
-    c3.info("📊 **Credit Intelligence**\n\nRating e dossier collegati")
+    c3.info("📄 **Riepilogo PDF**\n\nTabella documentale per cliente")
     st.markdown("### Accesso rapido")
-    st.write("Usa le schede in alto. Per consultare un cliente, apri **👥 Clienti**, cercalo e seleziona la sua anagrafica.")
+    st.write("Apri **👥 Clienti**, cerca il cliente, seleziona la sua anagrafica e usa i pulsanti del riepilogo documentale.")
 
 
 def render_settings(cfg: AppConfig) -> None:
@@ -66,6 +67,10 @@ def render_guide() -> None:
 3. Cerca per ragione sociale, P.IVA, codice fiscale, PEC o email.
 4. Seleziona il cliente: l'anagrafica si apre nella stessa app.
 5. Usa le schede **Pratiche**, **Documenti**, **Email** e **Analisi Creditizie** per consultare i record collegati.
+6. Nella sezione **Riepilogo documenti cliente** usa **Visualizza riepilogo documenti** oppure **Scarica riepilogo PDF**.
+
+### Contenuto del PDF documentale
+Il PDF riporta tutti i record documentali collegati al cliente in Airtable con tipo, esercizio, data, nome documento, origine, stato verifica, sintesi IA e link Drive quando disponibile.
 
 ### Secrets richiesti
 ```toml
