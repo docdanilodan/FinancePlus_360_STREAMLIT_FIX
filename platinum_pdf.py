@@ -65,7 +65,7 @@ def build_document_summary_pdf(
         topMargin=11 * mm,
         bottomMargin=11 * mm,
         title=f"Riepilogo documenti - {client_name}",
-        author="FinancePlus PLATINUM",
+        author="F_P_DIAMOND V_1.1",
         subject="Riepilogo documentale cliente",
     )
 
@@ -122,7 +122,7 @@ def build_document_summary_pdf(
     )
 
     story = [
-        Paragraph("FINANCEPLUS PLATINUM - RIEPILOGO DOCUMENTALE", title_style),
+        Paragraph("F_P_DIAMOND V_1.1 - RIEPILOGO DOCUMENTALE", title_style),
         Paragraph(
             f"<b>Cliente:</b> {escape(_txt(client_name))} &nbsp;&nbsp; "
             f"<b>P.IVA:</b> {escape(_txt(vat_number))} &nbsp;&nbsp; "
