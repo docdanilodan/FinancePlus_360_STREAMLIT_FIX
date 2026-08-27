@@ -1,4 +1,4 @@
-"""FinancePlus PLATINUM - Streamlit entrypoint.
+"""F_P_DIAMOND V_1.1 - Streamlit entrypoint.
 
 Versione evoluta di FinancePlus 360 con sezione Clienti collegata ad Airtable.
 La versione originale resta intatta in FinancePlus_360.py.
@@ -19,23 +19,23 @@ from FinancePlus_360 import (
 )
 from platinum_clients_v2 import render_clients_section
 
-APP_NAME = "FinancePlus PLATINUM"
-APP_VERSION = "1.1-platinum"
+APP_NAME = "F_P_DIAMOND V_1.1"
+APP_VERSION = "1.1"
 
 
 def render_sidebar() -> None:
     with st.sidebar:
-        st.title("💎 FinancePlus PLATINUM")
+        st.title("💎 F_P_DIAMOND V_1.1")
         st.caption("Finance & Credit Intelligence Workspace")
         st.markdown("---")
         st.markdown("**Moduli attivi**")
         st.markdown("- 👥 Clienti Airtable\n- 📩 Email & allegati\n- 🗂️ Dossier collegati\n- 📊 Analisi creditizie\n- 📄 Riepilogo documenti PDF")
         st.markdown("---")
-        st.caption(f"PLATINUM {APP_VERSION} · Core {LEGACY_APP_VERSION}")
+        st.caption(f"DIAMOND V_{APP_VERSION} · Core {LEGACY_APP_VERSION}")
 
 
 def render_home() -> None:
-    st.header("💎 FinancePlus PLATINUM")
+    st.header("💎 F_P_DIAMOND V_1.1")
     st.markdown(
         "Workspace unico per **clienti, pratiche, documenti, email e analisi creditizie**. "
         "La sezione Clienti legge direttamente il CRM Airtable, apre l'anagrafica completa dentro Streamlit "
