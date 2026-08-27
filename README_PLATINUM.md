@@ -1,8 +1,8 @@
-# 💎 FinancePlus PLATINUM
+# 💎 F_P_DIAMOND V_1.1
 
 Versione Streamlit evoluta di FinancePlus 360.
 
-## Novità principale: 👥 Clienti Airtable
+## 👥 Clienti Airtable
 
 La sezione **Clienti** legge direttamente la base Airtable FinancePlus AI e consente di:
 
@@ -13,6 +13,8 @@ La sezione **Clienti** legge direttamente la base Airtable FinancePlus AI e cons
 - consultare documenti collegati;
 - consultare email collegate;
 - consultare analisi creditizie collegate;
+- visualizzare il riepilogo documentale tabellare per cliente;
+- scaricare il riepilogo documentale in PDF e CSV;
 - aggiornare la cache Airtable dalla UI.
 
 ## Avvio
@@ -26,6 +28,8 @@ Su Streamlit Community Cloud usare come **Main file path**:
 ```text
 FinancePlus_PLATINUM.py
 ```
+
+Il file di avvio mantiene il nome tecnico precedente per compatibilità, mentre il nome visualizzato dell'app è **F_P_DIAMOND V_1.1**.
 
 ## Secrets
 
