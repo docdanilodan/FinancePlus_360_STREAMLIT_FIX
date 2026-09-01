@@ -1,47 +1,59 @@
-# 💎 F_P_DIAMOND V_1.1
+# 💎 F_P_DIAMOND / F_P_PLATINUM V_1.1
 
-Versione Streamlit evoluta di FinancePlus 360.
+Workspace Streamlit evoluto di FinancePlus 360.
 
-## 👥 Clienti Airtable
+## Moduli principali
 
-La sezione **Clienti** legge direttamente la base Airtable FinancePlus AI e consente di:
+- Dashboard operativa
+- Clienti / Aziende 360 con Airtable
+- Pratiche e workflow
+- Archivio documentale
+- Email multi-account Gmail + Aruba via IMAP
+- Analisi creditizie
+- Centrale Rischi e Conti Correnti
+- Business Plan
+- Report e riepiloghi PDF/CSV
+- Scadenzario e impostazioni
 
-- cercare per ragione sociale, P.IVA, codice fiscale, PEC o email;
-- aprire l'anagrafica senza uscire da Streamlit;
-- vedere rating FinancePlus e ultimo bilancio;
-- consultare pratiche collegate;
-- consultare documenti collegati;
-- consultare email collegate;
-- consultare analisi creditizie collegate;
-- visualizzare il riepilogo documentale tabellare per cliente;
-- scaricare il riepilogo documentale in PDF e CSV;
-- aggiornare la cache Airtable dalla UI.
-
-## Avvio
+## Avvio locale
 
 ```bash
-streamlit run FinancePlus_PLATINUM.py
+streamlit run streamlit_app.py
 ```
 
-Su Streamlit Community Cloud usare come **Main file path**:
+`streamlit_app.py` è l'entrypoint consigliato e richiama `FinancePlus_PLATINUM.main`.
+
+## Streamlit Community Cloud
+
+Configurazione consigliata:
 
 ```text
-FinancePlus_PLATINUM.py
+Repository: docdanilodan/FinancePlus_360_STREAMLIT_FIX
+Branch: main
+Main file path: streamlit_app.py
 ```
 
-Il file di avvio mantiene il nome tecnico precedente per compatibilità, mentre il nome visualizzato dell'app è **F_P_DIAMOND V_1.1**.
+In alternativa `FinancePlus_PLATINUM.py` può essere usato come entrypoint diretto.
 
-## Secrets
+### Secrets obbligatori per Airtable
 
-Aggiungere nelle impostazioni dell'app Streamlit:
+Inserire esclusivamente in **Streamlit Community Cloud > App settings > Secrets**:
 
 ```toml
 AIRTABLE_TOKEN = "pat_xxxxxxxxx"
 AIRTABLE_BASE_ID = "appoNJtS64JIcZUhT"
 ```
 
-Non committare mai il token Airtable nel repository.
+### Secrets email opzionali
+
+Per inizializzare automaticamente Gmail e le caselle Aruba usare la sezione `[financeplus_mail]` descritta in `.streamlit/secrets.example.toml`.
+
+Non salvare password, token o un vero `.streamlit/secrets.toml` nel repository pubblico.
+
+## Dipendenze
+
+Le dipendenze Cloud sono dichiarate in `requirements.txt` alla radice del repository.
 
 ## Sicurezza
 
-Il codice contiene solo gli ID non segreti della base e delle tabelle. Il PAT Airtable viene letto esclusivamente da Streamlit Secrets o dalla variabile ambiente `AIRTABLE_TOKEN`.
+Il repository contiene solo configurazioni non segrete e file di esempio. `.gitignore` esclude i segreti Streamlit, `.env`, configurazioni email locali e output scaricati.
