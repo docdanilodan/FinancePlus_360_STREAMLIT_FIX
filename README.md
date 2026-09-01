@@ -1,89 +1,103 @@
-# FinancePlus 360 - GitHub / Streamlit FIX
+# FINANCE_PLUS_GOLD_GENERALE
 
-Pacchetto corretto per risolvere l'errore Streamlit Cloud:
+Piattaforma Streamlit unificata per gestione clienti, fascicoli documentali, pratiche finanziarie, analisi di bilancio, Centrale Rischi, conti correnti, rating gestionale, business plan e dossier bancari PDF.
 
-```text
-ImportError: libtk... Python may not be configured for Tk
-```
-
-## File principali
-
-| File | Uso |
-|---|---|
-| `FinancePlus_360.py` | App web Streamlit compatibile Cloud, senza Tkinter |
-| `streamlit_app.py` | Wrapper alternativo per Streamlit Cloud |
-| `desktop/FinancePlus_360_DESKTOP_TKINTER.py` | Versione desktop originale Tkinter, da usare solo su PC |
-| `requirements.txt` | Dipendenze per Streamlit Cloud |
-| `.streamlit/secrets.example.toml` | Esempio configurazione sicura password |
-
-## Avvio locale web
+## Avvio rapido
 
 ```bash
+python -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-streamlit run FinancePlus_360.py
+streamlit run streamlit_app.py
 ```
 
-Su Windows puoi usare direttamente:
+Su Streamlit Community Cloud impostare **Main file path** su `streamlit_app.py`.
 
-```bat
-RUN_LOCAL_WINDOWS.bat
+## Moduli operativi
+
+| Modulo | Funzioni principali |
+|---|---|
+| Dashboard | Clienti, pratiche, importi richiesti, documenti, scadenze e portafoglio rating |
+| Clienti 360 | Ricerca, creazione e modifica anagrafica; P.IVA e C.F. facoltativi; fascicolo e completezza |
+| Pratiche | Pipeline, istituto, importo, stato, priorità, completezza, probabilità e prossima azione |
+| Documenti | Upload multiplo, classificazione, SHA-256 anti-duplicati, ricerca, anteprima e download |
+| Bilanci/KPI | Ricavi, EBITDA, PFN, DSCR, PFN/EBITDA, patrimonializzazione, liquidità e trend |
+| Centrale Rischi | Accordato, utilizzato, scaduto, past due, garanzie, intermediari e anomalie |
+| Conti correnti | Import CSV/XLSX, mapping colonne, entrate/uscite, flusso netto, copertura e saldi |
+| Rating/MCC | Score gestionale 0–100, classe AAA–D, componenti, punti di forza e criticità |
+| Business Plan | Previsioni fino a 10 anni, CFADS, DSCR, PFN, scenari e CSV scaricabile |
+| Mandati e compensi | Incarichi, percentuali, minimi, acconti, residui e scadenze |
+| Banche e factoring | Offerte, TAN, TAEG, durata, garanzie, rata stimata e confronto condizioni |
+| Email | Gmail/Aruba IMAP multi-account, filtri mittenti, acquisizione allegati e ZIP |
+| Scadenzario | Attività per cliente, priorità, stato, scadute e previste oggi |
+| Report | Dossier bancario PDF con anagrafica, KPI, CR, pratiche e completezza documentale |
+| Airtable Live | Consultazione anagrafiche collegate tramite token protetto |
+| Automazioni e sicurezza | Registro automazioni, password applicativa, audit log e backup ZIP |
+
+## Versione Windows `.exe`
+
+La pipeline **Build Windows EXE** genera automaticamente `FINANCE_PLUS_GOLD_GENERALE.exe` su un runner Windows reale. Il file è pubblicato come artifact GitHub `FINANCE_PLUS_GOLD_GENERALE_WINDOWS`.
+
+L'eseguibile avvia un server locale e apre il programma nel browser predefinito. Database e documenti sono salvati nella cartella utente `%APPDATA%\FINANCE_PLUS_GOLD_GENERALE`.
+
+Per ricostruire manualmente l'eseguibile su Windows:
+
+```powershell
+python -m pip install -r requirements.txt
+python -m pip install pyinstaller
+pyinstaller --noconfirm --clean FINANCE_PLUS_GOLD_GENERALE.spec
 ```
 
-## Avvio desktop originale
+In alternativa, senza `.exe`, fare doppio clic su `AVVIA_FINANCE_PLUS_GOLD_GENERALE.bat`.
 
-```bat
-RUN_DESKTOP_WINDOWS.bat
+## Persistenza
+
+Il database predefinito è SQLite e viene creato in `data/financeplus_gold_generale.sqlite3`; i file sono archiviati in `data/documenti/Cliente/Anno/Categoria`. La directory `data/` è esclusa da Git.
+
+Per usare un percorso persistente personalizzato:
+
+```bash
+export FINANCEPLUS_DATA_DIR=/percorso/persistente/financeplus
 ```
 
-## Configurazione su Streamlit Cloud
+Su hosting effimero occorre montare uno storage persistente oppure utilizzare un backend esterno. Airtable resta un'integrazione opzionale, non un requisito per avviare l'app.
 
-1. Carica questa cartella su GitHub.
-2. Vai su Streamlit Cloud.
-3. Imposta **Main file path** su:
+## Airtable
 
-```text
-FinancePlus_360.py
+Copiare `.streamlit/secrets.example.toml` nelle impostazioni protette di Streamlit e valorizzare:
+
+```toml
+AIRTABLE_TOKEN = "pat_..."
+AIRTABLE_BASE_ID = "app_..."
+FINANCEPLUS_APP_PASSWORD = "password-riservata"
 ```
 
-oppure:
+Non inserire mai token o password in file pubblici.
 
-```text
-streamlit_app.py
+## Email IMAP
+
+- Gmail: `imap.gmail.com`, porta 993 SSL, password per app.
+- Aruba: `imap.aruba.com`, porta 993 SSL, credenziali della casella.
+- La cancellazione delle email è disattivata per impostazione predefinita.
+- La configurazione locale `financeplus_mail_config.local.json` è esclusa dal repository.
+
+## Rating e avvertenze
+
+Lo score è uno strumento gestionale interno basato su soglie trasparenti per DSCR, PFN/EBITDA, EBITDA margin, equity ratio, current ratio, leverage e Centrale Rischi. Non replica i modelli proprietari di MCC, CRIF o degli istituti di credito e non costituisce promessa di finanziamento.
+
+## Test
+
+```bash
+python -m compileall -q .
+pytest -q
 ```
 
-4. Inserisci le password app/IMAP dalla schermata dell'app oppure in **Settings > Secrets**.
-5. Premi **Testa account attivi**.
-6. Premi **Scarica allegati/email**.
-7. Scarica lo ZIP generato.
+La pipeline GitHub Actions esegue compilazione, controllo degli errori bloccanti e test su Python 3.10, 3.11 e 3.12.
 
-## Funzioni incluse
+## Entry point e compatibilità
 
-- 3 account preconfigurati:
-  - Gmail personale
-  - `pratiche@financeplus.tech`
-  - `d.dangelo@financeplus.tech`
-- IMAP host/porta/cartella configurabili.
-- Mittenti monitorati già caricati.
-- Salvataggio `.eml` opzionale.
-- Anti-duplicati su hash SHA-256.
-- Archivio ZIP scaricabile.
-- Struttura cliente/anno/mese.
-- Cartella `_TEMP_DA_ABBINARE` per documenti non riconosciuti.
-- `ANAGRAFICA_CLIENTI_DA_MAIL.csv` generato automaticamente.
-- Riepilogo tecnico `RIEPILOGO_DOWNLOAD.json`.
-
-## Nota importante password
-
-Non caricare mai su GitHub file con password reali. Il file:
-
-```text
-financeplus_mail_config.local.json
-```
-
-e il file:
-
-```text
-.streamlit/secrets.toml
-```
-
-sono esclusi dal `.gitignore`.
+- `streamlit_app.py`: entry point per Streamlit Cloud.
+- `FINANCE_PLUS_GOLD_GENERALE.py`: applicazione ufficiale.
+- `FinancePlus_PLATINUM.py`: wrapper di compatibilità con il nome precedente.
+- `FinancePlus_360.py`: motore email cloud-safe preesistente.
+- `desktop/`: versione storica Tkinter, esclusa dai controlli CI.

@@ -7,95 +7,55 @@ from urllib.parse import quote
 import requests
 import streamlit as st
 
-AIRTABLE_BASE_ID_DEFAULT = "appoNJtS64JIcZUhT"
+AIRTABLE_BASE_ID_DEFAULT = ""
 
 TABLES = {
-    "Clienti": "tbltOh4J8m5VHoNOF",
-    "Pratiche": "tbl0qFi8aXz68jL1v",
-    "Documenti": "tblWxkIGieQuW8Cuo",
-    "Email": "tblmOCSQfwc3VItpm",
-    "Analisi Creditizie": "tblACV72ySC38jmvO",
+    "Clienti": "Clienti",
+    "Pratiche": "Pratiche",
+    "Documenti": "Documenti",
+    "Email": "Email",
+    "Analisi Creditizie": "Analisi Creditizie",
 }
 
 CLIENT_FIELDS = {
-    "name": "fldlULZ1ql3ZZiy6b",
-    "vat": "fldDqpW85V5Zo2MPJ",
-    "tax_code": "flde9dZlYmg1kkg3E",
-    "pec": "fldXmryz585q5A0dt",
-    "email": "fldpbmQHOqIOaY0DF",
-    "status": "fldFTnpVgFD5KL3UU",
-    "drive": "fldlgfAbSO0NBj7oY",
-    "notes": "fldXlrgJy8ersKl5m",
-    "practices": "fldyJ9XfSQBLikMfh",
-    "documents": "fldMhzNRWELCEqf9P",
-    "emails": "fldwChaBwKH4Fuz6a",
-    "analyses": "fldCIJ53UPhjvpqIv",
-    "rating_date": "fldvkCsbSHLnQdsW1",
-    "last_balance": "fldp1DxJrlI0JXhPi",
-    "rating": "fldE7lWIOF56Abw4v",
+    "name": "Denominazione",
+    "vat": "Partita IVA",
+    "tax_code": "Codice Fiscale",
+    "pec": "PEC",
+    "email": "Email",
+    "status": "Stato Cliente",
+    "drive": "Cartella Drive",
+    "notes": "Note",
+    "practices": "Pratiche",
+    "documents": "Documenti",
+    "emails": "Email collegate",
+    "analyses": "Analisi Creditizie",
+    "rating_date": "Data ultimo rating",
+    "last_balance": "Ultimo bilancio disponibile",
+    "rating": "Rating corrente",
 }
 
-PRACTICE_FIELDS = {
-    "Pratica ID": "fldrjfVFXWriOs9wj",
-    "Tipo Pratica": "fldifirqLW0d26NC7",
-    "Istituto": "fldhmDAtmI0QiKLqy",
-    "Importo Richiesto": "fldBPbr8JVncr4GF7",
-    "Stato": "fldVw9XxWCa7FY7M8",
-    "Priorita": "fldKg78ltnV9GPRpB",
-    "Data Apertura": "fldrfajsu95il5x1Y",
-    "Scadenza": "fldgB1Y8MMJTuxKuF",
-    "Responsabile": "fldJVSKCGk7GfaeYQ",
-    "Prossima azione": "fldYAFt1yL05Z9dSt",
-    "Completezza dossier": "fldPrieXJJO093p4B",
-    "Probabilita delibera": "flder31j0CGv8eWnK",
-    "Importo massimo stimato": "fldo5WkFyBctrgDfW",
-    "Alert e criticita": "fld62QTzmj0V8XAgZ",
-    "Documenti mancanti": "fld9SjGj9QvQD62EW",
-}
+PRACTICE_FIELDS = {name: name for name in (
+    "Pratica ID", "Tipo Pratica", "Istituto", "Importo Richiesto", "Stato", "Priorita",
+    "Data Apertura", "Scadenza", "Responsabile", "Prossima azione", "Completezza dossier",
+    "Probabilita delibera", "Importo massimo stimato", "Alert e criticita", "Documenti mancanti",
+)}
 
-DOCUMENT_FIELDS = {
-    "Documento": "fldVrVRWW60JnZOh8",
-    "Tipo Documento": "fldbb3rD72lXRM9s9",
-    "Esercizio": "fldQm1y1SLJW1fkAu",
-    "Data Documento": "fldqmwRgN9TdnvA69",
-    "Nome Originale": "fldKPu1TqZr5Bckdi",
-    "Nome Definitivo": "fldm42bV6e4cQfsvA",
-    "Origine": "flds5tGIYpxpox6Po",
-    "URL Drive": "fldU1isl4z0IFy921",
-    "Sintesi IA": "fldWD42BlvMMXdyjc",
-    "Stato Verifica": "fld1Outrv1BDxqoix",
-}
+DOCUMENT_FIELDS = {name: name for name in (
+    "Documento", "Tipo Documento", "Esercizio", "Data Documento", "Nome Originale",
+    "Nome Definitivo", "Origine", "URL Drive", "Sintesi IA", "Stato Verifica",
+)}
 
-EMAIL_FIELDS = {
-    "Oggetto": "fldlBzgCWBsyZIo20",
-    "Data e ora": "flddS9n7NCYMcbrXP",
-    "Mittente": "fldBQvEtviLPNlpBy",
-    "Sintesi IA": "fldnIgcruRAQKfiKL",
-    "Allegati": "fldQCvelRGh5CCThm",
-    "Priorita": "fldXdxoCmYORWqV2U",
-    "Azione Richiesta": "fldWPbNECz64Q5dV7",
-    "Gestita": "fldXyKJVZ87dT1Yrg",
-}
+EMAIL_FIELDS = {name: name for name in (
+    "Oggetto", "Data e ora", "Mittente", "Sintesi IA", "Allegati", "Priorita",
+    "Azione Richiesta", "Gestita",
+)}
 
-ANALYSIS_FIELDS = {
-    "Analisi ID": "fldhmm2RmHgLcghN6",
-    "Data Analisi": "fldPKXsTEku8kuhJl",
-    "Esercizio": "fldU3IrAAtJgG4EO7",
-    "Ricavi": "fldZEETotjt5aM524",
-    "EBITDA": "fld0ARNqsMJn88WX6",
-    "EBITDA Margin": "fldptI1aikmrZOb1v",
-    "PFN": "fldAeoXI03vQjD16Q",
-    "PFN EBITDA": "fldh1T0Cxh7yToR1O",
-    "DSCR": "fldtuLsdyn8yQTcBY",
-    "Patrimonio Netto": "fldAvJjuoTRw1KcSc",
-    "Score": "fld4hZlcUEf1F4WuC",
-    "Rating": "fldXpfjFn4H8nRWgW",
-    "Importo Sostenibile Min": "fldUUqryLL0lHiK2p",
-    "Importo Sostenibile Max": "fldXwuRxusyl70WMq",
-    "Punti di Forza": "fldcwvoPOGW58RqR9",
-    "Criticita": "fldwoAk93S2Q15err",
-    "Raccomandazione IA": "fldFjuKJqxi7lQ3r9",
-}
+ANALYSIS_FIELDS = {name: name for name in (
+    "Analisi ID", "Data Analisi", "Esercizio", "Ricavi", "EBITDA", "EBITDA Margin", "PFN",
+    "PFN EBITDA", "DSCR", "Patrimonio Netto", "Score", "Rating", "Importo Sostenibile Min",
+    "Importo Sostenibile Max", "Punti di Forza", "Criticita", "Raccomandazione IA",
+)}
 
 
 def _secret(name: str, default: Optional[str] = None) -> Optional[str]:

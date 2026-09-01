@@ -1,6 +1,8 @@
-streamlit>=1.36
-pandas>=2.0
-pypdf>=4.0
-pillow>=10.0
-reportlab>=4.0
-requests>=2.31
+streamlit>=1.36,<2.0
+pandas>=2.0,<3.0
+pypdf>=4.0,<7.0
+pillow>=10.0,<13.0
+reportlab>=4.0,<5.0
+requests>=2.31,<3.0
+openpyxl>=3.1,<4.0
+xlrd>=2.0,<3.0

@@ -1,0 +1,25 @@
+# Credenziali e configurazioni locali
+.streamlit/secrets.toml
+financeplus_mail_config.local.json
+.env
+.env.*
+!.env.example
+
+# Dati operativi: non devono entrare nel repository
+data/
+mail_scaricate/
+*.sqlite
+*.sqlite3
+*.db
+
+# Python / test / editor
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+.idea/
+.vscode/
+.DS_Store

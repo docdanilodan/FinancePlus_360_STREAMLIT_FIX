@@ -40,22 +40,13 @@ APP_VERSION = "5.1-streamlit-cloud-safe"
 LOCAL_CONFIG_FILE = Path("financeplus_mail_config.local.json")
 LOCAL_OUTPUT_DIR = Path("mail_scaricate")
 
-DEFAULT_SENDERS = [
-    "elibetty731@gmail.com",
-    "valentinaboratto82@gmail.com",
-    "stefano.faraone@eurofintechsrl.it",
-    "pratichebs@proton.me",
-    "sergio.pedolazzi@katudi.it",
-    "paolo.baldinelli@katudi.it",
-    "pratiche@katudi.it",
-    "niccolo.sovico@ener2crowd.com",
-]
+DEFAULT_SENDERS: List[str] = []
 
 DEFAULT_ACCOUNTS = [
     {
         "active": True,
         "name": "Account 1 Gmail",
-        "email_account": "dangelo.danilo.pri@gmail.com",
+        "email_account": "",
         "password": "",
         "imap_host": "imap.gmail.com",
         "imap_port": 993,
@@ -64,8 +55,8 @@ DEFAULT_ACCOUNTS = [
     },
     {
         "active": False,
-        "name": "FinancePlus pratiche",
-        "email_account": "pratiche@financeplus.tech",
+        "name": "Account 2 IMAP",
+        "email_account": "",
         "password": "",
         "imap_host": "imap.aruba.com",
         "imap_port": 993,
@@ -74,8 +65,8 @@ DEFAULT_ACCOUNTS = [
     },
     {
         "active": False,
-        "name": "FinancePlus d.dangelo",
-        "email_account": "d.dangelo@financeplus.tech",
+        "name": "Account 3 IMAP",
+        "email_account": "",
         "password": "",
         "imap_host": "imap.aruba.com",
         "imap_port": 993,
