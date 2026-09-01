@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# Streamlit secrets - NEVER commit real credentials
+.streamlit/secrets.toml
+
+# FinancePlus local mail credentials/config
+financeplus_mail_config.local.json
+.env
+.env.*
+!.env.example
+
+# Local outputs and downloaded mail
+mail_scaricate/
+*.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
